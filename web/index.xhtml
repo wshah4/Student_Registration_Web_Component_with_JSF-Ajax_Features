@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+        <h:form id="testForm">
+        <p:panelGrid columns="2" id="panel">
+            <f:facet name="header">
+                Student Registration Form
+            </f:facet>
+            
+            <p:outputLabel value="Enter First Name"/>
+            <p:inputText id="fname" value="#{studentRegistration.fname}"/>
+            
+            <p:outputLabel value="Enter Last Name"/>
+            <p:inputText id="lname" value="#{studentRegistration.lname}"/>
+            
+            <p:outputLabel value="Enter Address"/>
+            <p:inputText id="address" value="#{studentRegistration.address}"/>
+            
+            <p:outputLabel value="Enter City"/>
+            <p:inputText id="city" value="#{studentRegistration.city}"/>
+            
+            <p:outputLabel value="Enter State"/>
+            <p:autoComplete id="state" value="#{studentRegistration.state}" size="15"
+                            dropdown="true" emptyMessage="No Data" maxResults="5"
+                            queryDelay="1000" minQueryLength="2" completeMethod="#{studentRegistration.searchStates}"/>
+            
+            <p:outputLabel value="Enter Zip"/>
+            <p:inputText id="zip" value="#{studentRegistration.zip}"/>
+            
+            <p:outputLabel value="Enter registration Date"/>
+            <p:calendar id="regDate" value="#{studentRegistration.regDate}"/>
+            
+            <p:outputLabel value="Select Credits"/>
+            <p:selectOneListbox id="credits" value="#{studentRegistration.credits}" style="height:100px" scrollHeight="100">
+                <f:selectItems id="creditsList" var="credit" value="#{studentRegistration.creditsList}" itemLabel="#{credit.label}" itemValue="#{credit.value}"/>
+            </p:selectOneListbox>
+            
+            <p:outputLabel value="Select subject(s)"/>
+            <p:selectCheckboxMenu id="subject" value="#{studentRegistration.subjects}" style="width:100px" label="Subjects">
+                <f:selectItems id="courses" value="#{studentRegistration.courses}"/>
+            </p:selectCheckboxMenu>
+
+            <p:outputLabel value="Payment Type"/>
+            <p:selectOneRadio id="payment" value="#{studentRegistration.payment}">
+                <f:selectItem itemLabel="Cash" itemValue="0"/>
+                <f:selectItem itemLabel="Credit" itemValue="1"/>
+                <f:selectItem itemLabel="Debit" itemValue="2"/>
+            </p:selectOneRadio>
+            
+            <p:outputLabel value="Enter Comments"/>
+            <p:inputTextarea id="comments" value="#{studentRegistration.comments}"/>
+            
+            <p:panelGrid columns="1">
+                <p:commandButton value="Save" image="ui-icon-check" ajax="false" actionListener="#{studentRegistration.registerStudent()}"/>
+            </p:panelGrid>
+            
+        </p:panelGrid>
+        
+        <p:panel id="dataPanel" header="List of Students" closable="false" toggleable="true">
+            <p:dataTable id="dataTable" editable="false" var="student" paginator="true"
+                         rows="5" selectionMode="single" value="#{studentRegistration.dataModel}"
+                         rowKey="#{student.id}">
+                <f:facet name="header">
+                List of Students
+                </f:facet>
+                
+                <p:column sortBy="id" headerText="ID">
+                    <h:outputText value="#{student.id}"/>
+                </p:column>
+                
+                <p:column sortBy="firstName" headerText="FirstName">
+                    <h:outputText value="#{student.fname}"/>
+                </p:column>
+                
+                <p:column sortBy="lastName" headerText="LastName">
+                    <h:outputText value="#{student.lname}"/>
+                </p:column>
+                
+                <p:column sortBy="address" headerText="Address">
+                    <h:outputText value="#{student.address}"/>
+                </p:column>
+                
+                <p:column sortBy="city" headerText="City">
+                    <h:outputText value="#{student.city}"/>
+                </p:column>
+                
+                <p:column sortBy="zip" headerText="ZipCode">
+                    <h:outputText value="#{student.zip}"/>
+                </p:column>
+            
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+        
+</html>
+
